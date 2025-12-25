@@ -49,33 +49,7 @@ Unlike traditional chat applications, this project features a robust **Admin Pan
 * **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript (jQuery)
 * **Tools:** Visual Studio 2022, Git
 
-### ⚙️ Installation & Setup
 
-1.  **Clone the repository**
-    ```bash
-    git clone [https://github.com/yourusername/project-name.git](https://github.com/yourusername/project-name.git)
-    ```
-
-2.  **Configure Database**
-    Update the `appsettings.json` file with your SQL Server connection string.
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=YOUR_SERVER;Database=ChatAppDb;Trusted_Connection=True;MultipleActiveResultSets=true"
-    }
-    ```
-
-3.  **Run Migrations**
-    Open Package Manager Console and run:
-    ```powershell
-    Update-Database
-    ```
-
-4.  **Run the Application**
-    ```bash
-    dotnet run
-    ```
-
----
 ---
 
 <a name="-türkçe"></a>
