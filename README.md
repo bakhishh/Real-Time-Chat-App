@@ -40,11 +40,6 @@ Unlike traditional chat applications, this project features a robust **Admin Pan
 * **Announcement System:** Admins can broadcast announcements to all connected users instantly.
 * **User Management:** Admin can Add, Update, or Delete users directly from the dashboard.
 
-### 📸 Screenshots
-*(You can upload screenshots to an 'images' folder in your repo and link them here)*
-| Dashboard (Desktop) | Mobile Chat View | Admin Panel |
-|:---:|:---:|:---:|
-| ![Desktop View](https://via.placeholder.com/400x200?text=Desktop+Dashboard) | ![Mobile View](https://via.placeholder.com/200x400?text=Mobile+Chat) | ![Admin Panel](https://via.placeholder.com/400x200?text=Admin+Panel) |
 
 ### 🛠 Technologies Used
 * **Framework:** .NET 8.0 (ASP.NET Core Razor Pages)
