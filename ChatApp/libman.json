@@ -1,0 +1,13 @@
+﻿{
+  "version": "1.0",
+  "defaultProvider": "unpkg", // <-- BU SATIR EKLENDİ VEYA DÜZELTİLDİ
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@6.0.7",
+      "destination": "wwwroot/lib/signalr",
+      "files": [
+        "dist/browser/signalr.js"
+      ]
+    }
+  ]
+}

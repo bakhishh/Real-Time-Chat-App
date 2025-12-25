@@ -1,0 +1,457 @@
+﻿@page
+@model ChatApp.Pages.User.UserPageModel
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "User Dashboard";
+    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0";
+}
+
+<style>
+    :root {
+        --user-primary: #1e293b;
+        --user-accent: #3b82f6;
+    }
+
+    body { 
+        background-color: #f1f5f9; 
+        overflow: hidden; 
+        position: fixed; /* Prevents whole page scrolling on mobile */
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Dashboard Wrapper: Desktop Layout */
+    .dashboard-wrapper {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding-top: 1.5rem;
+        padding-bottom: 3.5rem; 
+    }
+
+    .dashboard-row { height: 100%; overflow: hidden; }
+
+    .card { border: none; border-radius: 12px; }
+    .shadow-sm { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; }
+
+    /* Scrollable Content Area */
+    .scrollable-list {
+        overflow-y: auto;
+        flex-grow: 1;
+        padding-right: 5px;
+    }
+
+    /* Contact List Item Design */
+    .contact-list-item { 
+        border: 1px solid #e2e8f0 !important;
+        margin-bottom: 8px;
+        border-radius: 10px !important;
+        background-color: #fff;
+        padding: 12px !important;
+        transition: 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-decoration: none !important;
+        color: inherit;
+    }
+    .contact-list-item:hover { background-color: #f8fafc; cursor: pointer; transform: translateY(-1px); }
+    .contact-list-item.active { background-color: #eff6ff !important; border-color: #3b82f6 !important; }
+
+    .user-info-box { flex: 1; min-width: 0; }
+    .user-name-text {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #1e293b;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Chat Structure */
+    .chat-container { border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+     
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+    /* =========================================
+       MOBILE RESPONSIVE SETTINGS
+       ========================================= */
+    @@media (max-width: 767.98px) {
+        .dashboard-wrapper {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 100dvh !important; /* Fix for mobile address bar */
+        }
+        
+        .dashboard-row {
+            display: block; 
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100%;
+        }
+
+        .col-md-3, .col-md-5, .col-md-4 {
+            padding: 0 !important;
+        }
+
+        /* Make panels full screen */
+        #panel-contacts, #panel-chat, #panel-announcements {
+            height: 100% !important;
+            width: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            background-color: #f1f5f9;
+            z-index: 10;
+        }
+
+        /* Fix corners on mobile */
+        .card { border-radius: 0 !important; height: 100% !important; }
+
+        /* Chat view flex fixes */
+        .chat-container { display: flex; flex-direction: column; }
+        #chat-messages { flex: 1 1 auto !important; min-height: 0 !important; }
+        
+        /* Ensure footer stays at bottom */
+        #chat-footer { flex: 0 0 auto !important; padding-bottom: env(safe-area-inset-bottom); }
+
+        /* Initial Visibility States */
+        #panel-chat, #panel-announcements { display: none !important; }
+        #panel-contacts { display: flex !important; z-index: 20; }
+    }
+</style>
+
+<div class="container-fluid dashboard-wrapper">
+    <div class="row dashboard-row px-2">
+        
+        <div id="panel-contacts" class="col-md-3 d-flex flex-column h-100">
+            
+            <div class="d-md-none bg-dark text-white p-3 d-flex justify-content-between align-items-center shadow-sm flex-shrink-0">
+                <span class="font-weight-bold">User Dashboard</span>
+                <button class="btn btn-info btn-sm font-weight-bold" onclick="showMobilePanel('announcements')">
+                    📢 Announcements
+                </button>
+            </div>
+
+            <div class="card shadow-sm mb-3 text-white flex-shrink-0 d-none d-md-block" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+                <div class="card-body py-3 text-center">
+                    <h5 class="mb-0 font-weight-bold">Welcome, @User.Identity!.Name!</h5>
+                </div>
+            </div>
+
+            <div class="card shadow-sm flex-grow-1 overflow-hidden d-flex flex-column mb-0">
+                <div class="card-header bg-white py-3 border-bottom flex-shrink-0">
+                    <h6 class="mb-0 font-weight-bold text-primary">Contacts</h6>
+                </div>
+                <div class="card-body bg-light scrollable-list">
+                    @if (Model.Contacts.Any())
+                    {
+                        @foreach (var contact in Model.Contacts)
+                        {
+                            <div class="contact-list-item shadow-sm"
+                                 data-user-id="@contact.Id"
+                                 data-user-name="@contact.Username">
+                                <div class="user-info-box">
+                                    <span class="user-name-text">@contact.FirstName @contact.LastName</span>
+                                    <small class="text-muted">@@@contact.Username</small>
+                                </div>
+                                @if (contact.Role == "Admin")
+                                {
+                                    <span class="badge ml-2 px-2" 
+                                          style="background-color: #dc3545; color: white; font-weight: bold; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        Admin
+                                    </span>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-5 small">No contacts found.</div>
+                    }
+                </div>
+                
+                 <div class="d-md-none card-footer bg-white p-2">
+                     <div class="d-flex gap-2">
+                        <a asp-page="/Account/ChangePassword" class="btn btn-dark flex-grow-1 font-weight-bold py-2 shadow-sm">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
+                        <form method="get" asp-page="/Account/Logout" class="flex-grow-1 m-0">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-block font-weight-bold py-2 shadow-sm">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panel-chat" class="col-md-5 d-flex flex-column h-100 px-3 px-md-3 px-0">
+            <div class="card shadow-sm chat-container">
+                <div id="chat-header" class="card-header bg-dark text-white py-3 flex-shrink-0 d-flex align-items-center justify-content-between">
+    
+                    <button class="btn btn-light btn-sm d-md-none flex-shrink-0 font-weight-bold shadow-sm px-3" 
+                            onclick="showMobilePanel('contacts')"
+                            style="color: #333;"> 
+                        <i class="fas fa-arrow-left mr-1"></i> Back
+                    </button>
+
+                    <h6 id="chat-title" class="mb-0 font-weight-bold text-truncate text-right pl-3">
+                        <i class="far fa-comments mr-2"></i>Select a contact...
+                    </h6>
+                </div>
+                <div id="chat-messages" class="card-body bg-white flex-grow-1 overflow-auto" style="min-height: 0;">
+                    <div id="empty-chat-message" class="text-center text-muted mt-5">
+                        <p>Click on a contact to open chat history.</p>
+                    </div>
+                </div>
+                
+                <div id="chat-footer" class="card-footer bg-white d-none border-top flex-shrink-0 p-3">
+                    <div class="input-group">
+                        <input type="text" id="message-input" class="form-control border-right-0" placeholder="Type a message..." 
+                               style="height: 45px; border-radius: 8px 0 0 8px; border-color: #ced4da;">
+                        <div class="input-group-append">
+                            <button id="send-button" class="btn btn-primary px-4 font-weight-bold" type="button" 
+                                    style="height: 45px; border-radius: 0 8px 8px 0; display: flex; align-items: center;">
+                                <i class="fas fa-paper-plane mr-2"></i> Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panel-announcements" class="col-md-4 d-flex flex-column h-100">
+            
+            <div class="d-md-none bg-info p-3 d-flex align-items-center justify-content-between mb-0 flex-shrink-0">
+                <button class="btn btn-sm btn-light font-weight-bold shadow-sm" onclick="showMobilePanel('contacts')">
+                    <i class="fas fa-arrow-left mr-1"></i> Back
+                </button>
+                <span class="font-weight-bold text-white">Announcements</span>
+            </div>
+
+            <div class="card shadow-sm border-info flex-grow-1 overflow-hidden d-flex flex-column mb-0">
+                <div class="card-header bg-info text-white font-weight-bold py-3 flex-shrink-0 d-none d-md-block">
+                    📢 Latest Announcements
+                </div>
+
+                <div id="announcements-list" class="card-body bg-light scrollable-list">
+                    @if (Model.LatestAnnouncements != null && Model.LatestAnnouncements.Any())
+                    {
+                        @foreach (var announcement in Model.LatestAnnouncements)
+                        {
+                            <div class="border rounded mb-2 bg-white shadow-xs p-3 announcement-item" 
+                                 data-announcement-id="@announcement.Id">
+                          
+                                <h6 class="mb-1 text-primary font-weight-bold">@announcement.Title</h6>
+                                <p class="mb-2 text-dark" style="font-size: 0.85rem;">@announcement.Content</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"><i class="far fa-clock mr-1"></i>@announcement.Date.ToString("dd MMM, HH:mm")</small>
+                                    <small class="font-weight-bold text-secondary">@@@announcement.CreatedByUser?.Username</small>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted mt-5 small">No announcements found.</div>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-3 d-none d-md-flex gap-2 flex-shrink-0">
+                <a asp-page="/Account/ChangePassword" class="btn btn-dark font-weight-bold flex-grow-1 py-2 shadow-sm mr-2" style="border-radius: 10px;">
+                    <i class="fas fa-key mr-1"></i> Change Password
+                </a>
+
+                <form method="get" asp-page="/Account/Logout" class="flex-grow-1 m-0">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger btn-block font-weight-bold py-2 shadow-sm" style="border-radius: 10px;">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+
+    <script>
+        const CURRENT_USER_ID = '@userId'; 
+        var connection = null;
+        var currentTargetId = null; 
+
+        function getAntiForgeryToken() {
+            return $('input[name="__RequestVerificationToken"]').val();
+        }
+
+        function showMobilePanel(panelName) {
+            if ($(window).width() >= 768) return;
+
+            $('#panel-contacts').attr('style', 'display: none !important');
+            $('#panel-chat').attr('style', 'display: none !important');
+            $('#panel-announcements').attr('style', 'display: none !important');
+
+            if (panelName === 'contacts') {
+                $('#panel-contacts').attr('style', 'display: flex !important');
+            } 
+            else if (panelName === 'chat') {
+                $('#panel-chat').attr('style', 'display: flex !important');
+                if(currentTargetId) { $('#chat-footer').removeClass('d-none'); }
+            } 
+            else if (panelName === 'announcements') {
+                $('#panel-announcements').attr('style', 'display: flex !important');
+            }
+        }
+
+        function displayNewAnnouncement(title, content, date, id, username) {
+            var senderName = username ? username : "Admin";
+            var announcementHtml = `
+                <div class="border rounded mb-2 bg-white shadow-xs p-3 announcement-item new-announcement-flash" 
+                     data-announcement-id="${id}"> 
+                    <h6 class="mb-1 text-primary font-weight-bold">${title}</h6>
+                    <p class="mb-2 text-dark" style="font-size: 0.85rem;">${content}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted"><i class="far fa-clock mr-1"></i>${date}</small>
+                        <small class="font-weight-bold text-secondary">@@${senderName}</small>
+                    </div>
+                </div>
+            `;
+            
+            var listContainer = $('#announcements-list'); 
+            listContainer.find('.text-center.text-muted').remove(); 
+            listContainer.prepend(announcementHtml);
+
+            var newElement = listContainer.find(`[data-announcement-id="${id}"]`);
+            newElement.css('background-color', '#fff3cd').hide().fadeIn(500); 
+            setTimeout(() => { newElement.css('background-color', '#ffffff'); }, 2000); 
+        }
+
+        function removeAnnouncementFromList(announcementId) {
+            var elementToRemove = $(`[data-announcement-id="${announcementId}"]`);
+            if (elementToRemove.length) {
+                elementToRemove.fadeOut(400, function() {
+                    $(this).remove();
+                    if ($('#announcements-list').children().length === 0) {
+                        $('#announcements-list').html('<div class="text-center text-muted mt-5 small">No announcements found.</div>');
+                    }
+                });
+            }
+        }
+
+        function startSignalR() {
+            connection = new signalR.HubConnectionBuilder()
+                .withUrl("/chatHub")
+                .build();
+
+            connection.on("ReceiveMessage", function (senderId, senderUsername, messageContent, time) {
+                if (senderId == currentTargetId || senderId == CURRENT_USER_ID) {
+                    $('#no-history-message').remove();
+                    addMessageToChat(senderId, messageContent, time, senderUsername);
+                }
+            });
+
+            connection.on("ReceiveAnnouncement", function (title, content, date, id, username) {
+                console.log("New announcement from " + username);
+                displayNewAnnouncement(title, content, date, id, username);
+            });
+            
+            connection.on("RemoveAnnouncement", function (id) {
+                removeAnnouncementFromList(id);
+            });
+
+            connection.start().then(() => console.log("SignalR Connected."))
+                      .catch(err => setTimeout(startSignalR, 5000));
+        }
+
+        function addMessageToChat(senderId, content, time, senderUsername) {
+            var isSentByMe = (senderId == CURRENT_USER_ID);
+            var chatBody = $('#chat-messages');
+            var messageHtml = `
+                <div class="d-flex ${isSentByMe ? 'justify-content-end' : 'justify-content-start'} mb-3">
+                    <div class="card p-2 shadow-sm ${isSentByMe ? 'bg-info text-white' : 'bg-light text-dark'}" style="max-width: 70%;">
+                        <div class="small font-weight-bold ${isSentByMe ? 'text-right text-white' : 'text-left text-muted'}">
+                            ${isSentByMe ? 'You' : senderUsername}
+                        </div>
+                        <div>${content}</div>
+                        <div class="small ${isSentByMe ? 'text-right text-white-50' : 'text-left text-muted'}">${time}</div>
+                    </div>
+                </div>`;
+            $('#chat-messages .alert-info').remove();
+            chatBody.append(messageHtml);
+            chatBody.scrollTop(chatBody.prop("scrollHeight"));
+        }
+
+        function loadChatHistory(userId) {
+            var chatBody = $('#chat-messages');
+            chatBody.html('<div class="text-center p-3 text-muted">Loading...</div>');
+            $.ajax({
+                url: `?handler=ChatHistory&targetId=${userId}`,
+                type: 'GET',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() },
+                success: function(response) {
+                    chatBody.empty();
+                    if (response.success && response.messages.length > 0) {
+                        response.messages.forEach(msg => {
+                            var name = msg.isSender ? 'You' : $('#chat-title').text().replace('Chatting with: ', '');
+                            addMessageToChat(msg.isSender ? CURRENT_USER_ID : userId, msg.content, msg.time, name);
+                        });
+                    } else {
+                        chatBody.html('<div id="no-history-message" class="text-center text-muted mt-5">No message history yet.</div>');
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            startSignalR();
+
+            $('#send-button').on('click', function(e) { 
+                e.preventDefault(); 
+     
+                var msgInput = $('#message-input'); 
+                var messageContent = msgInput.val().trim();
+     
+                if (messageContent && currentTargetId && connection.state === "Connected") {
+     
+                    connection.invoke("SendMessage", currentTargetId, messageContent).then(() => {
+                        msgInput.val(''); 
+                        setTimeout(function() { 
+                            msgInput.focus(); 
+                        }, 10); 
+         
+                    }).catch(err => console.error(err));
+                }
+                msgInput.focus();
+            });
+
+            $('#message-input').on('keypress', function(e) {
+                if (e.which == 13) { e.preventDefault(); $('#send-button').click(); }
+            });
+
+            $('.contact-list-item').on('click', function(e) {
+                e.preventDefault();
+                var userName = $(this).data('user-name');
+                currentTargetId = $(this).data('user-id');
+                
+                $('#chat-title').html('<i class="far fa-comments mr-2"></i>' + userName);
+                $('#empty-chat-message').addClass('d-none');
+                $('#chat-footer').removeClass('d-none');
+                $('.contact-list-item').removeClass('active');
+                $(this).addClass('active');
+                loadChatHistory(currentTargetId);
+
+                // MOBILE: Switch to Chat Panel
+                showMobilePanel('chat');
+            });
+        });
+    </script>
+}
