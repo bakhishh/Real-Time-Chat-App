@@ -8,7 +8,7 @@
 ---
 
 ## 🌍 Language / Dil
-- [🇬🇧 English Section](#-english)
+- [EN English Section](#-english)
 - [🇹🇷 Türkçe Bölüm](#-türkçe)
 
 ---
