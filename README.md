@@ -79,11 +79,6 @@ Sıradan sohbet uygulamalarından farklı olarak, kapsamlı bir **Admin Paneli**
 * **Duyuru (Broadcast) Sistemi:** Adminlerin sistemdeki herkese anında duyuru gönderebilmesi.
 * **Kullanıcı Yönetimi:** Adminlerin panel üzerinden kullanıcı Ekleme/Silme/Güncelleme işlemleri.
 
-### 📸 Ekran Görüntüleri
-*(Ekran görüntülerinizi reponuzdaki bir klasöre yükleyip buraya linkleyebilirsiniz)*
-| Masaüstü Görünüm | Mobil Sohbet | Admin Paneli |
-|:---:|:---:|:---:|
-| ![Desktop View](https://via.placeholder.com/400x200?text=Masaustu+Gorunumu) | ![Mobile View](https://via.placeholder.com/200x400?text=Mobil+Sohbet) | ![Admin Panel](https://via.placeholder.com/400x200?text=Admin+Paneli) |
 
 ### 🛠 Kullanılan Teknolojiler
 * **Altyapı:** .NET 8.0 (ASP.NET Core Razor Pages)
@@ -93,38 +88,12 @@ Sıradan sohbet uygulamalarından farklı olarak, kapsamlı bir **Admin Paneli**
 * **Arayüz:** HTML5, CSS3, Bootstrap 5, JavaScript (jQuery/AJAX)
 * **Araçlar:** Visual Studio 2022, Git
 
-### ⚙️ Kurulum
-
-1.  **Projeyi Klonlayın**
-    ```bash
-    git clone [https://github.com/kullaniciadiniz/proje-adi.git](https://github.com/kullaniciadiniz/proje-adi.git)
-    ```
-
-2.  **Veritabanı Ayarları**
-    `appsettings.json` dosyasındaki bağlantı adresini (Connection String) kendi sunucunuza göre düzenleyin.
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=SUNUCU_ADINIZ;Database=ChatAppDb;Trusted_Connection=True;MultipleActiveResultSets=true"
-    }
-    ```
-
-3.  **Veritabanını Oluşturun (Migration)**
-    Package Manager Console'u açın ve şu komutu çalıştırın:
-    ```powershell
-    Update-Database
-    ```
-
-4.  **Projeyi Çalıştırın**
-    ```bash
-    dotnet run
-    ```
 
 ---
 
 ### 👤 Author / Yazar
-**[Your Name / Adınız]**
-* LinkedIn: [Your LinkedIn Profile]
-* Portfolio: [Your Portfolio URL]
+**Bakhish Fataliyev**
+* LinkedIn: [www.linkedin.com/in/bakhish-fataliyev]
 
 ---
-*Created with ❤️ using .NET Core 8.0*
+
