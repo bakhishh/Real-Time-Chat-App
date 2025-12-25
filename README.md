@@ -14,7 +14,7 @@
 ---
 
 <a name="-english"></a>
-## 🇬🇧 English
+## EN English
 
 ### 📖 Overview
 This project is a **Real-Time Messaging and Administration System** built on **ASP.NET Core 8.0** architecture. It leverages **SignalR** to establish seamless, bi-directional communication via WebSockets.
