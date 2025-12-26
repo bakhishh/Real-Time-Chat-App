@@ -52,8 +52,8 @@ Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 1.  **Projeyi Klonlayın**
     ```bash
-    git clone [https://github.com/kullaniciadiniz/proje-adi.git](https://github.com/kullaniciadiniz/proje-adi.git)
-    cd proje-adi
+    git clone [https://github.com/bakhishh/Real-Time-Chat-App.git](https://github.com/bakhishh/Real-Time-Chat-App.git)
+    cd Real-Time-Chat-App
     ```
 
 2.  **Veritabanı Ayarlarını Yapın**
@@ -120,8 +120,8 @@ Follow these steps to run the project on your local machine:
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/yourusername/project-name.git](https://github.com/yourusername/project-name.git)
-    cd project-name
+    git clone [https://github.com/bakhishh/Real-Time-Chat-App.git](https://github.com/bakhishh/Real-Time-Chat-App.git)
+    cd Real-Time-Chat-App
     ```
 
 2.  **Configure Database**
@@ -150,5 +150,4 @@ Follow these steps to run the project on your local machine:
 **Bakhish Fataliyev**
 * LinkedIn: [www.linkedin.com/in/bakhish-fataliyev]
 
----
-*Created with ❤️ using .NET Core 8.0*
+
