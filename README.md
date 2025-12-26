@@ -1,54 +1,13 @@
-# ChatApp
-
-# 💬 Real-Time Messaging & Management System (SignalR)
-# 🇹🇷 Gerçek Zamanlı Mesajlaşma ve Yönetim Sistemi
+# 💬 Gerçek Zamanlı Mesajlaşma ve Yönetim Sistemi (SignalR)
+# 🇬🇧 Real-Time Messaging & Management System
 
 ![.NET Core](https://img.shields.io/badge/.NET%20Core-8.0-purple) ![SignalR](https://img.shields.io/badge/SignalR-RealTime-blue) ![Bootstrap](https://img.shields.io/badge/Bootstrap-Responsive-success) ![Status](https://img.shields.io/badge/Status-Completed-green)
 
 ---
 
-## 🌍 Language / Dil
-- [EN English Section](#-english)
+## 🌍 Dil / Language
 - [🇹🇷 Türkçe Bölüm](#-türkçe)
-
----
-
-<a name="-english"></a>
-## EN English
-
-### 📖 Overview
-This project is a **Real-Time Messaging and Administration System** built on **ASP.NET Core 8.0** architecture. It leverages **SignalR** to establish seamless, bi-directional communication via WebSockets.
-
-Unlike traditional chat applications, this project features a robust **Admin Panel** for user management and a broadcasting system for announcements. The frontend is designed with a **mobile-first approach**, ensuring a native-app-like experience on mobile devices with smooth transitions and persistent keyboard focus handling.
-
-### ✨ Key Features
-
-#### 🚀 Technical & Backend
-* **Real-Time Communication:** Uses **SignalR** hubs for instant messaging without page reloads.
-* **Clean Architecture:** Implements **Repository Pattern** and **N-Layer Architecture** for maintainable and testable code.
-* **Security:** Secured with **ASP.NET Core Identity** (Authentication & Authorization).
-* **RBAC (Role-Based Access Control):** Distinct roles for **Admin** and **User**.
-
-#### 📱 User Experience (UX) & Frontend
-* **Fully Responsive:** Adaptive layout that behaves like a desktop dashboard on large screens and a mobile app on phones.
-* **Smart Mobile View:** On mobile, the contact list and chat window switch dynamically with a "Back" navigation button, maximizing screen usage.
-* **Focus Management:** Custom JavaScript implementation to prevent keyboard dismissal on mobile devices after sending messages.
-* **Instant Notifications:** Visual cues (flash effects) for new messages and announcements.
-
-#### 🛠 Functional Modules
-* **One-on-One Chat:** Private messaging between users.
-* **Announcement System:** Admins can broadcast announcements to all connected users instantly.
-* **User Management:** Admin can Add, Update, or Delete users directly from the dashboard.
-
-
-### 🛠 Technologies Used
-* **Framework:** .NET 8.0 (ASP.NET Core Razor Pages)
-* **Real-Time:** SignalR
-* **Database:** MS SQL Server
-* **ORM:** Entity Framework Core (Code-First)
-* **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript (jQuery)
-* **Tools:** Visual Studio 2022, Git
-
+- [🇬🇧 English Section](#-english)
 
 ---
 
@@ -79,7 +38,6 @@ Sıradan sohbet uygulamalarından farklı olarak, kapsamlı bir **Admin Paneli**
 * **Duyuru (Broadcast) Sistemi:** Adminlerin sistemdeki herkese anında duyuru gönderebilmesi.
 * **Kullanıcı Yönetimi:** Adminlerin panel üzerinden kullanıcı Ekleme/Silme/Güncelleme işlemleri.
 
-
 ### 🛠 Kullanılan Teknolojiler
 * **Altyapı:** .NET 8.0 (ASP.NET Core Razor Pages)
 * **Real-Time:** SignalR
@@ -88,6 +46,103 @@ Sıradan sohbet uygulamalarından farklı olarak, kapsamlı bir **Admin Paneli**
 * **Arayüz:** HTML5, CSS3, Bootstrap 5, JavaScript (jQuery/AJAX)
 * **Araçlar:** Visual Studio 2022, Git
 
+### ⚙️ Kurulum (Installation)
+
+Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyin:
+
+1.  **Projeyi Klonlayın**
+    ```bash
+    git clone [https://github.com/kullaniciadiniz/proje-adi.git](https://github.com/kullaniciadiniz/proje-adi.git)
+    cd proje-adi
+    ```
+
+2.  **Veritabanı Ayarlarını Yapın**
+    `appsettings.json` dosyasını açın ve `ConnectionStrings` bölümündeki sunucu adını kendi yerel SQL sunucunuza (veya LocalDB'ye) göre güncelleyin.
+    ```json
+    "ConnectionStrings": {
+      "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=ChatAppDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+    ```
+
+3.  **Veritabanını Oluşturun (Migration)**
+    Package Manager Console (veya Terminal) üzerinden veritabanını oluşturun:
+    ```bash
+    dotnet ef database update
+    ```
+
+4.  **Projeyi Çalıştırın**
+    ```bash
+    dotnet run
+    ```
+    Tarayıcınızda `https://localhost:5001` (veya size verilen portu) açarak uygulamayı kullanabilirsiniz.
+
+---
+---
+
+<a name="-english"></a>
+## 🇬🇧 English
+
+### 📖 Overview
+This project is a **Real-Time Messaging and Administration System** built on **ASP.NET Core 8.0** architecture. It leverages **SignalR** to establish seamless, bi-directional communication via WebSockets.
+
+Unlike traditional chat applications, this project features a robust **Admin Panel** for user management and a broadcasting system for announcements. The frontend is designed with a **mobile-first approach**, ensuring a native-app-like experience on mobile devices with smooth transitions and persistent keyboard focus handling.
+
+### ✨ Key Features
+
+#### 🚀 Technical & Backend
+* **Real-Time Communication:** Uses **SignalR** hubs for instant messaging without page reloads.
+* **Clean Architecture:** Implements **Repository Pattern** and **N-Layer Architecture** for maintainable and testable code.
+* **Security:** Secured with **ASP.NET Core Identity** (Authentication & Authorization).
+* **RBAC (Role-Based Access Control):** Distinct roles for **Admin** and **User**.
+
+#### 📱 User Experience (UX) & Frontend
+* **Fully Responsive:** Adaptive layout that behaves like a desktop dashboard on large screens and a mobile app on phones.
+* **Smart Mobile View:** On mobile, the contact list and chat window switch dynamically with a "Back" navigation button, maximizing screen usage.
+* **Focus Management:** Custom JavaScript implementation to prevent keyboard dismissal on mobile devices after sending messages.
+* **Instant Notifications:** Visual cues (flash effects) for new messages and announcements.
+
+#### 🛠 Functional Modules
+* **One-on-One Chat:** Private messaging between users.
+* **Announcement System:** Admins can broadcast announcements to all connected users instantly.
+* **User Management:** Admin can Add, Update, or Delete users directly from the dashboard.
+
+### 🛠 Technologies Used
+* **Framework:** .NET 8.0 (ASP.NET Core Razor Pages)
+* **Real-Time:** SignalR
+* **Database:** MS SQL Server
+* **ORM:** Entity Framework Core (Code-First)
+* **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript (jQuery)
+* **Tools:** Visual Studio 2022, Git
+
+### ⚙️ Installation
+
+Follow these steps to run the project on your local machine:
+
+1.  **Clone the Repository**
+    ```bash
+    git clone [https://github.com/yourusername/project-name.git](https://github.com/yourusername/project-name.git)
+    cd project-name
+    ```
+
+2.  **Configure Database**
+    Open `appsettings.json` and update the `ConnectionStrings` section with your local SQL Server (or LocalDB) instance name.
+    ```json
+    "ConnectionStrings": {
+      "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=ChatAppDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+    ```
+
+3.  **Run Migrations**
+    Create the database using the Package Manager Console or Terminal:
+    ```bash
+    dotnet ef database update
+    ```
+
+4.  **Run the Application**
+    ```bash
+    dotnet run
+    ```
+    Navigate to `https://localhost:5001` (or the provided port) in your browser.
 
 ---
 
@@ -96,4 +151,4 @@ Sıradan sohbet uygulamalarından farklı olarak, kapsamlı bir **Admin Paneli**
 * LinkedIn: [www.linkedin.com/in/bakhish-fataliyev]
 
 ---
-
+*Created with ❤️ using .NET Core 8.0*
