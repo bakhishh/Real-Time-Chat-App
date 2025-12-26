@@ -92,20 +92,6 @@ async Task SeedDataAsync(IServiceProvider serviceProvider)
             }
         }
 
-        if (!await context.Users.AnyAsync(u => u.Username == "pelin"))
-        {
-            bool success = await authService.RegisterAsync(
-                username: "pelin",
-                password: "2103",
-                firstName: "Pelin",
-                lastName: "G"
-            );
-
-            if (success)
-            {
-                Console.WriteLine("User 'pelin' created successfully with password: 2103");
-            }
-        }
 
         if (adminUser != null && !await context.Announcements.AnyAsync())
         {
