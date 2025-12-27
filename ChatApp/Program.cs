@@ -104,6 +104,7 @@ async Task SeedDataAsync(IServiceProvider serviceProvider)
             };
 
             await announcementRepository.AddAsync(initialAnnouncement);
+            await announcementRepository.SaveAsync();
             
             Console.WriteLine("Initial welcome announcement seeded successfully.");
         }
